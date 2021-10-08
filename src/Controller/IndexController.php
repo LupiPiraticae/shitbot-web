@@ -28,17 +28,20 @@ class IndexController extends AbstractController
             [
                 'id' => 1,
                 'name' => 'Klo 1',
-                'position' => 'left'
+                'position' => 'left',
+                'state' => 'occupied'
             ],
             [
                 'id' => 2,
                 'name' => 'Klo 2',
-                'position' => 'middle'
+                'position' => 'middle',
+                'state' => 'free'
             ],
             [
                 'id' => 3,
                 'name' => 'Klo 3',
-                'position' => 'right'
+                'position' => 'right',
+                'state' => 'free'
             ]
         ];
 
