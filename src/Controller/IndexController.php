@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Repository\FacilityRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class IndexController extends AbstractController
 {
@@ -22,28 +25,12 @@ class IndexController extends AbstractController
      *
      * @return Response
      */
-    public function getFacilities(): Response
+    public function getFacilities(FacilityRepository $facilityRepository): Response
     {
-        $facilities = [
-            [
-                'id' => 1,
-                'name' => 'Klo 1',
-                'position' => 'left',
-                'state' => 'occupied'
-            ],
-            [
-                'id' => 2,
-                'name' => 'Klo 2',
-                'position' => 'middle',
-                'state' => 'free'
-            ],
-            [
-                'id' => 3,
-                'name' => 'Klo 3',
-                'position' => 'right',
-                'state' => 'free'
-            ]
-        ];
+        $normalizers = [new ObjectNormalizer()];
+        $serializer = new Serializer($normalizers, []);
+
+        $facilities = $serializer->normalize($facilityRepository->findAll());
 
         return new JsonResponse($facilities);
     }
