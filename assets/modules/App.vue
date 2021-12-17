@@ -29,14 +29,18 @@ export default {
         }
     },
     created() {
-        this.$http.get('/facility/list')
-            .then(response => {
-                this.facilities = response.data;
-            });
+        setInterval(this.fetchFacilites.bind(this), 1000);
     },
     methods: {
         isOccupied(f) {
             return f.state == 'occupied' ? 'danger' : 'light';
+        },
+        fetchFacilites() {
+            console.log("REFRESH");
+            this.$http.get('/facility/list')
+                .then(response => {
+                    this.facilities = response.data;
+                });
         }
     }
 }
